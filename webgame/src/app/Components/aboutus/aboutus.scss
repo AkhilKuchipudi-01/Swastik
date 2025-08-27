@@ -1,0 +1,336 @@
+/* Container */
+.aboutPageContainer {
+    width: 100%;
+    min-height: 100vh;
+    padding: 2rem 1rem;
+    font-family: Arial, sans-serif;
+    color: var(--text-color);
+    background: var(--bg-color);
+    position: relative;
+    overflow: hidden;
+}
+
+/* Glow */
+.accentGlow {
+    position: absolute;
+    top: -10%;
+    right: -10%;
+    width: 250px;
+    height: 250px;
+    background: radial-gradient(circle, var(--accent-color) 0%, transparent 70%);
+    opacity: 0.3;
+    filter: blur(60px);
+    animation: pulseGlow 6s infinite alternate;
+    z-index: 0;
+}
+
+/* Hero Section */
+.heroSection {
+    text-align: center;
+    margin-bottom: 3rem;
+    z-index: 1;
+}
+
+.heroSection h1 {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+    color: var(--accent-color);
+    animation: fadeInDown 1s ease;
+}
+
+.heroSection p {
+    font-size: 1.2rem;
+    max-width: 800px;
+    margin: 0 auto;
+    color: var(--text-muted);
+    line-height: 1.6;
+    animation: fadeInUp 1.2s ease;
+}
+
+/* Mission */
+.missionSection {
+    text-align: center;
+    margin-bottom: 3rem;
+}
+
+.missionSection h2 {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+    color: var(--accent-color);
+}
+
+.missionSection p {
+    font-size: 1.1rem;
+    color: var(--text-muted);
+    max-width: 700px;
+    margin: 0 auto;
+    line-height: 1.6;
+}
+
+/* Values Section */
+.valuesSection {
+    text-align: center;
+    margin-bottom: 4rem;
+}
+
+.valuesSection h2 {
+    font-size: 2rem;
+    margin-bottom: 2rem;
+    color: var(--accent-color);
+}
+
+.valuesGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 2rem;
+    max-width: 1100px;
+    margin: 0 auto;
+}
+
+.valueCard {
+    background: rgba(255, 255, 255, 0.05);
+    padding: 2rem;
+    border-radius: 16px;
+    backdrop-filter: blur(8px);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.valueCard:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+}
+
+.valueCard span {
+    font-size: 2.2rem;
+    margin-bottom: 0.8rem;
+    display: inline-block;
+    animation: floatIcon 3s infinite ease-in-out;
+}
+
+.valueCard h3 {
+    font-size: 1.3rem;
+    margin-bottom: 0.5rem;
+    color: var(--accent-color);
+}
+
+.valueCard p {
+    font-size: 1rem;
+    color: var(--text-muted);
+}
+
+/* Team Section */
+.teamSection {
+    text-align: center;
+    margin-bottom: 4rem;
+}
+
+.teamSection h2 {
+    font-size: 2rem;
+    margin-bottom: 2rem;
+    color: var(--accent-color);
+}
+
+.teamGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 2rem;
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+.teamCard {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 16px;
+    padding: 1.5rem;
+    backdrop-filter: blur(8px);
+    text-align: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.teamCard:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.2);
+}
+
+.teamCard img {
+    width: 100%;
+    height: auto;
+    border-radius: 50%;
+    margin-bottom: 1rem;
+}
+
+.teamCard h3 {
+    font-size: 1.2rem;
+    margin-bottom: 0.3rem;
+    color: var(--accent-color);
+}
+
+.teamCard p {
+    font-size: 1rem;
+    color: var(--text-muted);
+}
+
+/* Animations */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeInDown {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes floatIcon {
+
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-6px);
+    }
+}
+
+@keyframes pulseGlow {
+    0% {
+        opacity: 0.3;
+        transform: scale(1);
+    }
+
+    100% {
+        opacity: 0.6;
+        transform: scale(1.2);
+    }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .heroSection h1 {
+        font-size: 2rem;
+    }
+
+    .heroSection p,
+    .missionSection p {
+        font-size: 1rem;
+    }
+
+    .valuesGrid,
+    .teamGrid {
+        grid-template-columns: 1fr;
+    }
+}
+
+.bgEdit:hover,
+.bgEdit.active {
+    border-radius: 24px;
+    background: rgba(255, 255, 255, .6);
+    border: 1px solid rgba(255, 255, 255, .5);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, .5),
+        0 20px 60px -20px rgba(0, 0, 0, .45);
+    cursor: pointer;
+}
+
+.darkMode .bgEdit:hover,
+.bgEdit.active {
+    background: rgba(255, 255, 255, .08);
+    border-color: rgba(255, 255, 255, .1);
+}
+
+:host-context(body.blueGradient) {
+    .bgEdit:hover {
+        box-shadow: 0 0 40px rgba(79, 172, 254, 0.6);
+        background: var(--blueGradient) !important;
+    }
+
+    .bgEdit.active {
+        background: var(--blueGradient) !important;
+    }
+}
+
+:host-context(body.pinkGradient) {
+
+    .bgEdit:hover {
+        box-shadow: 0 0 40px rgba(255, 106, 136, 0.6);
+        background: var(--pinkGradient) !important;
+    }
+
+    .bgEdit.active {
+        // box-shadow: 0 0 40px rgba(255, 106, 136, 0.6);
+        background: var(--pinkGradient) !important;
+    }
+}
+
+:host-context(body.mintGradient) {
+
+    .bgEdit:hover {
+        box-shadow: 0 0 40px rgba(67, 233, 123, 0.6);
+        background: var(--mintGradient) !important;
+    }
+
+    .bgEdit.active {
+        // box-shadow: 0 0 40px rgba(67, 233, 123, 0.6);
+        background: var(--mintGradient) !important;
+    }
+}
+
+:host-context(body.sunsetGradient) {
+
+    .bgEdit:hover {
+        // box-shadow: 0 0 40px rgba(255, 153, 102, 0.6);
+        background: var(--sunsetGradient) !important;
+        // opacity: 0.1;
+    }
+
+    .bgEdit.active {
+        // box-shadow: 0 0 40px rgba(255, 153, 102, 0.6);
+        background: var(--sunsetGradient) !important;
+        // opacity: 0.1;
+    }
+}
+
+:host-context(body.blackGradient) {
+
+    .bgEdit:hover {
+        box-shadow: 0 0 40px rgba(35, 37, 38, 0.6);
+        background: var(--blackGradient) !important;
+        color: white;
+    }
+
+    .bgEdit.active {
+        // box-shadow: 0 0 40px rgba(35, 37, 38, 0.6);
+        background: var(--blackGradient) !important;
+        color: white;
+    }
+}
+
+.reflectiveStreak {
+    position: absolute;
+    right: -25%;
+    top: -25%;
+    width: auto;
+    height: auto;
+    transform: rotate(45deg);
+    background: rgba(255, 255, 255, .28);
+    filter: blur(24px);
+    border-radius: 50%;
+    pointer-events: none;
+}

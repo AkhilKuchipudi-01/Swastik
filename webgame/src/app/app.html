@@ -1,0 +1,104 @@
+<div class="mainContainer">
+
+  <!-- Subtle aurora backdrop -->
+  <div class="auroraBackdrop" [ngClass]="accent"></div>
+
+  <!-- Top Nav -->
+  <div class="topNav" *ngIf="showHeader">
+    <div class="container d-flex align-items-center justify-content-between py-2">
+
+      <!-- Left side -->
+      <div class="d-flex align-items-center gap-2">
+        <div class="glossyOrb position-relative">
+          <div class="orbGlow"></div>
+        </div>
+        <span class="appTitle">Rock Paper Scissors</span>
+      </div>
+
+      <!-- Right side -->
+      <div class="d-flex gap-2">
+
+        <!-- Account menu -->
+        <div class="myAccount" [class.open]="accountMenuOpen" *ngIf="loggedIn; else guestMenu">
+          <button type="button" class="pillButton" (click)="toggleAccountMenu()">
+            {{ accountLabel }}
+          </button>
+
+          <!-- Dropdown -->
+          <div class="navItems liveBadge" [ngClass]="accent">
+            <div class="accentGlow" [ngClass]="accent"></div>
+            <div class="reflectiveStreak"></div>
+            <span class="navItem pillButton" (click)="openSettings()" [ngClass]="accent">Settings</span>
+            <span class="navItem pillButton" [ngClass]="accent" (click)="logout()">Logout</span>
+          </div>
+        </div>
+
+        <!-- Guest menu -->
+        <ng-template #guestMenu>
+          <div class="d-flex justify-content-between gap-2">
+            <div class="d-flex align-items-center gap-2">
+              <span class="pillButton homeBtn navBtn" routerLink="/home" routerLinkActive="active"
+                [routerLinkActiveOptions]="{ exact: true }" [ngClass]="accent">
+                Home
+              </span>
+
+              <span class="pillButton supportusBtn navBtn" routerLink="/supportus" routerLinkActive="active"
+                [ngClass]="accent">
+                Support Us
+              </span>
+
+              <span class="pillButton featuresBtn navBtn" routerLink="/features" routerLinkActive="active"
+                [ngClass]="accent">
+                Features
+              </span>
+
+              <span class="pillButton aboutusBtn navBtn" routerLink="/aboutus" routerLinkActive="active"
+                [ngClass]="accent">
+                About Us
+              </span>
+
+
+            </div>
+            <div class="d-flex gap-2">
+              <button type="button" class="pillButton" (click)="openSettings()">Settings</button>
+              <button type="button" class="pillButton" (click)="router.navigate(['/login'])">
+                Login
+              </button>
+            </div>
+
+          </div>
+        </ng-template>
+      </div>
+    </div>
+  </div>
+
+  <!-- Settings Dialog -->
+  <p-dialog header="Settings" [(visible)]="showSettings" [modal]="true" [closable]="true" [dismissableMask]="true"
+    [style]="{ width: '60%' }" [breakpoints]="{'960px': '95vw', '640px': '100vw'}">
+
+    <!-- Theme Settings -->
+    <div class="mb-4">
+      <span>Theme Settings: </span>
+      <button type="button" (click)="toggleTheme()" class="pillButton">
+        {{ theme === 'system' ? 'System Mode' : (theme === 'dark' ? 'Dark Mode' : 'Light Mode') }}
+      </button>
+    </div>
+
+    <!-- Control Panel -->
+    <div class="controlPanel" [ngClass]="accent">
+      <h3 class="sectionTitle mb-1">Controls</h3>
+      <p class="sectionSub text-muted mb-3">Tweak the accent to match your brand.</p>
+      <div class="row g-2 w-100">
+        <div class="col-4" *ngFor="let opt of accents">
+          <button class="controlTile w-100 text-start position-relative"
+            [ngClass]="{ selectedTile: accent === opt.val }" (click)="setAccent(opt.val)">
+            <div class="controlSwatch" [ngClass]="opt.val"></div>
+            <span class="controlLabel d-block mt-2">{{ opt.name }}</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </p-dialog>
+
+  <router-outlet></router-outlet>
+</div>

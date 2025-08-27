@@ -1,0 +1,297 @@
+.authContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    // min-height: 100vh;
+    background: var(--bg-gradient);
+    padding: 2rem;
+    // position: relative;
+
+    .authCard {
+        // position: absolute;
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 20%;
+        float: left;
+        padding: 5%;
+        width: 50%;
+        height: auto;
+        // max-width: 400px;
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.25);
+        text-align: center;
+
+        h2 {
+            margin-bottom: 1.5rem;
+            font-size: 1.8rem;
+            font-weight: 600;
+            color: var(--text-color);
+        }
+
+        .formGroup {
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 1rem;
+            text-align: left;
+
+            label {
+                margin-bottom: 0.4rem;
+                font-size: 0.9rem;
+                font-weight: 500;
+                color: var(--text-color);
+            }
+
+            input {
+                padding: 0.7rem 1rem;
+                border: none;
+                border-radius: 12px;
+                outline: none;
+                font-size: 1rem;
+                background: rgba(255, 255, 255, 0.2);
+                color: var(--text-color);
+
+                &:focus {
+                    border: 2px solid var(--accent-color, #3b82f6);
+                    background: rgba(255, 255, 255, 0.3);
+                }
+            }
+        }
+
+        .accentBtn {
+            width: 100%;
+            margin-top: 1rem;
+            border-radius: 50px;
+            padding: 0.8rem;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            opacity: 1;
+
+            &.blueGradient {
+                background: linear-gradient(45deg, #3b82f6, #06b6d4);
+                color: #fff;
+            }
+
+            &.pinkGradient {
+                background: linear-gradient(45deg, #ec4899, #f43f5e, #f97316);
+                color: #fff;
+            }
+
+            &.mintGradient {
+                background: linear-gradient(45deg, #34d399, #10b981, #059669);
+                color: #fff;
+            }
+
+            &.sunsetGradient {
+                background: linear-gradient(45deg, #f97316, #ef4444, #ec4899);
+                color: #fff;
+            }
+
+            &.blackGradient {
+                background: linear-gradient(45deg, #111, #333, #000);
+                color: #fff;
+            }
+
+            &:hover {
+                transform: translateY(-2px);
+                box-shadow: 0 6px 18px rgba(0, 0, 0, 0.25);
+            }
+        }
+
+        .switchMode {
+            margin-top: 1rem;
+            font-size: 0.9rem;
+            color: var(--text-color);
+
+            a {
+                color: var(--accent-color, #3b82f6);
+                font-weight: 600;
+                cursor: pointer;
+                text-decoration: underline;
+            }
+        }
+    }
+
+    .errorMsg {
+        margin-top: 1rem;
+        color: #ef4444; // red
+        font-size: 0.9rem;
+        font-weight: 500;
+    }
+
+}
+
+:host-context(body.blueGradient) {
+    .auroraBackdrop {
+        background: linear-gradient(135deg, #4facfe, #00f2fe);
+    }
+
+    .accentGlow {
+        background: var(--blueGradient) !important;
+    }
+
+    .accentGlow,
+    .nowPlayingGlow {
+        box-shadow: 0 0 40px rgba(79, 172, 254, 0.6);
+    }
+
+    .coverGradient {
+        background: linear-gradient(135deg, #4facfe, #00f2fe);
+    }
+
+    .progressFill,
+    .liveBadge {
+        background: #4facfe;
+    }
+
+    .modalCard {
+        border: 1px solid rgba(79, 172, 254, .3);
+    }
+}
+
+:host-context(body.pinkGradient) {
+    .auroraBackdrop {
+        background: linear-gradient(135deg, #ff6a88, #ff99ac);
+    }
+
+    .accentGlow {
+        background: var(--pinkGradient) !important;
+    }
+
+    .accentGlow,
+    .nowPlayingGlow {
+        box-shadow: 0 0 40px rgba(255, 106, 136, 0.6);
+    }
+
+    .coverGradient {
+        background: linear-gradient(135deg, #ff6a88, #ff99ac);
+    }
+
+    .progressFill,
+    .liveBadge {
+        background: #ff6a88;
+    }
+
+    .modalCard {
+        border: 1px solid rgba(255, 106, 136, .3);
+    }
+}
+
+:host-context(body.mintGradient) {
+    .auroraBackdrop {
+        background: linear-gradient(135deg, #43e97b, #38f9d7);
+    }
+
+    .accentGlow {
+        background: var(--mintGradient) !important;
+    }
+
+    .accentGlow,
+    .nowPlayingGlow {
+        box-shadow: 0 0 40px rgba(67, 233, 123, 0.6);
+    }
+
+    .coverGradient {
+        background: linear-gradient(135deg, #43e97b, #38f9d7);
+    }
+
+    .progressFill,
+    .liveBadge {
+        background: #43e97b;
+    }
+
+    .modalCard {
+        border: 1px solid rgba(67, 233, 123, .3);
+    }
+}
+
+:host-context(body.sunsetGradient) {
+    .auroraBackdrop {
+        background: linear-gradient(135deg, #ff9966, #ff5e62);
+    }
+
+    .accentGlow {
+        background: var(--sunsetGradient) !important;
+    }
+
+    .accentGlow,
+    .nowPlayingGlow {
+        box-shadow: 0 0 40px rgba(255, 153, 102, 0.6);
+    }
+
+    .coverGradient {
+        background: linear-gradient(135deg, #ff9966, #ff5e62);
+    }
+
+    .progressFill,
+    .liveBadge {
+        background: #ff9966;
+        color: var(--text-color);
+    }
+
+    .modalCard {
+        border: 1px solid rgba(255, 153, 102, .3);
+    }
+}
+
+:host-context(body.blackGradient) {
+    .auroraBackdrop {
+        background: linear-gradient(135deg, #232526, #414345);
+    }
+
+    .accentGlow {
+        background: var(--blackGradient) !important;
+    }
+
+    .accentGlow,
+    .nowPlayingGlow {
+        box-shadow: 0 0 40px rgba(35, 37, 38, 0.6);
+    }
+
+    .coverGradient {
+        background: linear-gradient(135deg, #232526, #414345);
+    }
+
+    // .progressFill{
+    //     background: #f3f3f3 !important;
+    // }
+
+    .progressFill,
+    .liveBadge {
+        // background: #232526;
+        background: #f3f3f3 !important;
+        color: #232526;
+    }
+
+    .modalCard {
+        border: 1px solid rgba(35, 37, 38, .3);
+    }
+}
+
+.accentGlow {
+    position: absolute;
+    inset: -120px;
+    opacity: .45;
+    filter: blur(80px);
+    pointer-events: none;
+}
+
+.reflectiveStreak {
+    position: absolute;
+    right: -25%;
+    top: -25%;
+    width: auto;
+    height: auto;
+    transform: rotate(45deg);
+    background: rgba(255, 255, 255, .28);
+    filter: blur(24px);
+    border-radius: 50%;
+    pointer-events: none;
+}
+
+input.invalid {
+    border: 2px solid #ef4444 !important; // red border
+    background: rgba(255, 0, 0, 0.05);
+}

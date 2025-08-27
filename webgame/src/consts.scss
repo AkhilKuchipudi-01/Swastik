@@ -1,0 +1,80 @@
+/* Base Variables (Light Mode Default) */
+:root {
+  /* Background + Text */
+  --bg-gradient: linear-gradient(135deg, #fafafa, #ffffff, #f0f0f0);
+  --text-color: #121212;
+
+  /* Top nav */
+  --nav-bg: rgba(255, 255, 255, .5);
+  /* --nav-border: rgba(255, 255, 255, .18); */
+  --nav-border: rgba(0, 0, 0, 0.15);
+
+  /* Orb */
+  --orb-glow: rgba(255, 255, 255, .4);
+
+  /* Pill button */
+  --pill-bg: rgba(255, 255, 255, .7);
+  --pill-text: #111;
+  --pill-border: rgba(255, 255, 255, .5);
+
+  /* Accent gradients */
+    // background: linear-gradient(90deg, #3b82f6, #6366f1, #8b5cf6);
+  --blueGradient: linear-gradient(45deg, #3b82f6, #6366f1, #8b5cf6);
+  --pinkGradient: linear-gradient(45deg, #ec4899, #f43f5e, #f97316);
+  --mintGradient: linear-gradient(45deg, #34d399, #14b8a6, #06b6d4);
+  --sunsetGradient: linear-gradient(45deg, #f59e0b, #f97316, #ef4444);
+  --blackGradient: linear-gradient(45deg, #000000, #1a1a1a, #333333);
+
+  /* Transition for theme switch */
+  --transition-speed: 0.3s;
+}
+
+/* Auto Dark Mode (system preference) */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg-gradient: linear-gradient(135deg, #0b0b0b, #1a1a1a, #2a2a2a);
+    --text-color: #f5f5f5;
+
+    --nav-bg: rgba(255, 255, 255, .08);
+    /* --nav-border: rgba(255, 255, 255, .08); */
+    --nav-border: rgba(255, 255, 255, 0.2);
+
+    --orb-glow: rgba(255, 255, 255, .1);
+
+    --pill-bg: rgba(255, 255, 255, .12);
+    --pill-text: #f3f3f3;
+    --pill-border: rgba(255, 255, 255, .12);
+  }
+}
+
+/* Manual Light Mode Override */
+body.light-theme-override {
+  --bg-gradient: linear-gradient(135deg, #fafafa, #ffffff, #f0f0f0);
+  --text-color: #121212;
+
+  --nav-bg: rgba(255, 255, 255, .5);
+  /* --nav-border: rgba(255, 255, 255, .18); */
+  --nav-border: rgba(0, 0, 0, 0.15);
+
+  --orb-glow: rgba(255, 255, 255, .4);
+
+  --pill-bg: rgba(255, 255, 255, .7);
+  --pill-text: #111;
+  --pill-border: rgba(255, 255, 255, .5);
+}
+
+/* Manual Dark Mode Override */
+body.dark-theme-override {
+  --bg-gradient: linear-gradient(135deg, #0b0b0b, #1a1a1a, #2a2a2a);
+  --text-color: #f5f5f5;
+
+  --nav-bg: rgba(255, 255, 255, .08);
+  /* --nav-border: rgba(255, 255, 255, .08); */
+  --nav-border: rgba(255, 255, 255, 0.2);
+
+  --orb-glow: rgba(255, 255, 255, .1);
+
+  --pill-bg: rgba(255, 255, 255, .12);
+  --pill-text: #f3f3f3;
+  --pill-border: rgba(255, 255, 255, .12);
+}

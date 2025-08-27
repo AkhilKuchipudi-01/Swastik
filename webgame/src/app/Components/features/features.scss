@@ -1,0 +1,327 @@
+/* Container */
+.featuresPageContainer {
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 2rem 1rem;
+    font-family: Arial, sans-serif;
+    color: var(--text-color);
+    background: var(--bg-color);
+    position: relative;
+    overflow: hidden;
+}
+
+.auroraBackdrop {
+    position: absolute;
+    inset: 0;
+    opacity: .55;
+    filter: blur(80px);
+    mix-blend-mode: soft-light;
+    pointer-events: none;
+}
+
+/* Glow background */
+.accentGlow {
+    position: absolute;
+    top: -10%;
+    left: -10%;
+    width: auto;
+    height: auto;
+    background: radial-gradient(circle, var(--accent-color) 0%, transparent 70%);
+    opacity: 0.3;
+    filter: blur(60px);
+    animation: pulseGlow 6s infinite alternate;
+    z-index: 0;
+}
+
+/* Hero Section */
+.heroSection {
+    text-align: center;
+    margin-bottom: 3rem;
+    z-index: 1;
+}
+
+.heroSection h1 {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+    color: var(--accent-color);
+    animation: fadeInDown 1s ease;
+}
+
+.heroSection p {
+    font-size: 1.2rem;
+    max-width: 800px;
+    margin: 0 auto;
+    color: var(--text-muted);
+    line-height: 1.6;
+    animation: fadeInUp 1.2s ease;
+}
+
+/* Features Section */
+.featuresSection {
+    text-align: center;
+    width: 100%;
+    margin-bottom: 4rem;
+    z-index: 1;
+}
+
+.featuresSection h2 {
+    font-size: 2rem;
+    margin-bottom: 2rem;
+    animation: fadeInUp 1s ease;
+    color: var(--accent-color);
+}
+
+.featuresGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* Feature Card */
+.featureCard {
+    padding: 2rem;
+    border-radius: 16px;
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(8px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.featureCard:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.2);
+}
+
+.featureCard span {
+    display: inline-block;
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+    animation: floatIcon 3s infinite ease-in-out;
+}
+
+.featureCard h3 {
+    font-size: 1.4rem;
+    margin-bottom: 0.8rem;
+    color: var(--accent-color);
+}
+
+.featureCard p {
+    font-size: 1rem;
+    color: var(--text-muted);
+    line-height: 1.5;
+}
+
+/* CTA Section */
+.ctaSection {
+    text-align: center;
+    margin: 3rem 0;
+    position: relative;
+    z-index: 1;
+}
+
+.ctaSection h2 {
+    font-size: 2rem;
+    margin-bottom: 1.5rem;
+    animation: fadeInDown 1s ease;
+}
+
+.ctaButtons {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.ctaButton {
+    padding: 0.8rem 1.8rem;
+    border-radius: 25px;
+    text-decoration: none;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    font-weight: 600;
+}
+
+.ctaButton.primary {
+    background: var(--accent-color);
+    color: #fff;
+}
+
+.ctaButton.primary:hover {
+    background: var(--accent-color-dark);
+}
+
+.ctaButton.secondary {
+    background: transparent;
+    border: 2px solid var(--accent-color);
+    color: var(--accent-color);
+}
+
+.ctaButton.secondary:hover {
+    background: var(--accent-color);
+    color: #fff;
+}
+
+/* Animations */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeInDown {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes floatIcon {
+
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-8px);
+    }
+}
+
+@keyframes pulseGlow {
+    0% {
+        opacity: 0.3;
+        transform: scale(1);
+    }
+
+    100% {
+        opacity: 0.6;
+        transform: scale(1.2);
+    }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .heroSection h1 {
+        font-size: 2rem;
+    }
+
+    .heroSection p {
+        font-size: 1rem;
+    }
+
+    .ctaButtons {
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    .featuresGrid {
+        grid-template-columns: 1fr;
+    }
+}
+
+.bgEdit:hover {
+    border-radius: 24px;
+    background: rgba(255, 255, 255, .6);
+    border: 1px solid rgba(255, 255, 255, .5);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, .5),
+        0 20px 60px -20px rgba(0, 0, 0, .45);
+    cursor: pointer;
+}
+
+.darkMode .bgEdit:hover {
+    background: rgba(255, 255, 255, .08);
+    border-color: rgba(255, 255, 255, .1);
+}
+
+:host-context(body.blueGradient) {
+    .bgEdit:hover {
+        box-shadow: 0 0 40px rgba(79, 172, 254, 0.6);
+        background: var(--blueGradient) !important;
+    }
+
+    .auroraBackdrop {
+        background: linear-gradient(135deg, #4facfe, #00f2fe);
+    }
+}
+
+:host-context(body.pinkGradient) {
+    .bgEdit:hover {
+        box-shadow: 0 0 40px rgba(255, 106, 136, 0.6);
+        background: var(--pinkGradient) !important;
+    }
+
+    .auroraBackdrop {
+        background: linear-gradient(135deg, #ff6a88, #ff99ac);
+    }
+
+}
+
+:host-context(body.mintGradient) {
+    .bgEdit:hover {
+        box-shadow: 0 0 40px rgba(67, 233, 123, 0.6);
+        background: var(--mintGradient) !important;
+    }
+
+    .auroraBackdrop {
+        background: linear-gradient(135deg, #43e97b, #38f9d7);
+    }
+}
+
+:host-context(body.sunsetGradient) {
+    .bgEdit:hover {
+        box-shadow: 0 0 40px rgba(255, 153, 102, 0.6);
+        background: var(--sunsetGradient) !important;
+        // opacity: 0.1;
+    }
+
+    .auroraBackdrop {
+        background: linear-gradient(135deg, #ff9966, #ff5e62);
+    }
+}
+
+:host-context(body.blackGradient) {
+    .bgEdit:hover {
+        box-shadow: 0 0 40px rgba(35, 37, 38, 0.6);
+        background: var(--blackGradient) !important;
+        color: white;
+    }
+
+    .auroraBackdrop {
+        background: linear-gradient(135deg, #232526, #414345);
+    }
+}
+
+.reflectiveStreak {
+    position: absolute;
+    right: -25%;
+    top: -25%;
+    width: auto;
+    height: auto;
+    transform: rotate(45deg);
+    background: rgba(255, 255, 255, .28);
+    filter: blur(24px);
+    border-radius: 50%;
+    pointer-events: none;
+}
