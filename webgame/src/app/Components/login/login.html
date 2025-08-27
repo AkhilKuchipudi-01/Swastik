@@ -1,0 +1,57 @@
+<div class="authContainer" [ngClass]="accent">
+    <div class="authCard overflow-hidden">
+        <div class="accentGlow"></div>
+        <div class="reflectiveStreak"></div>
+        <h2>{{ isLoginMode ? 'Login' : 'Sign Up' }}</h2>
+
+        <form #authForm="ngForm" (ngSubmit)="onSubmit(authForm.value)">
+
+            <!-- Username (only for signup) -->
+            <div class="formGroup" *ngIf="!isLoginMode">
+                <label for="username">Username</label>
+                <input id="username" type="text" name="username" ngModel required #username="ngModel"
+                    [class.invalid]="username.invalid && username.touched" />
+                <small *ngIf="username.invalid && username.touched" class="errorMsg">
+                    Username is required
+                </small>
+            </div>
+
+            <!-- Email -->
+            <div class="formGroup">
+                <label for="email">Email</label>
+                <input id="email" type="email" name="email" ngModel required email #email="ngModel"
+                    [class.invalid]="email.invalid && email.touched" />
+                <small *ngIf="email.invalid && email.touched" class="errorMsg">
+                    Please enter a valid email
+                </small>
+            </div>
+
+            <!-- Password -->
+            <div class="formGroup">
+                <label for="password">Password</label>
+                <input id="password" type="password" name="password" ngModel required minlength="8" #password="ngModel"
+                    [class.invalid]="password.invalid && password.touched" />
+                <small *ngIf="password.errors?.['minlength'] && password.touched" class="errorMsg">
+                    Password must be at least 8 characters
+                </small>
+            </div>
+
+            <!-- General Error -->
+            <p *ngIf="errorMessage" class="errorMsg">
+                {{ errorMessage }}
+            </p>
+
+            <!-- Submit Button -->
+            <button type="submit" class="pillButton accentBtn liveBadge" [disabled]="authForm.invalid">
+                {{ isLoginMode ? 'Login' : 'Sign Up' }}
+            </button>
+        </form>
+
+        <p class="switchMode">
+            {{ isLoginMode ? "Don't have an account?" : "Already have an account?" }}
+            <a (click)="switchMode()">
+                {{ isLoginMode ? "Sign Up" : "Login" }}
+            </a>
+        </p>
+    </div>
+</div>

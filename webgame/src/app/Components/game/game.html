@@ -1,0 +1,47 @@
+<div class="mainContainer d-flex flex-column align-items-center justify-content-center">
+    <div>
+        <span class="rockPaperScissorText">Rock Paper Scissors</span>
+    </div>
+    <div>hi</div>
+    <div>
+        <button class="rockPaperScissorButton" (click)="play('rock')">
+            <img class="rps" src="../../../assets/rock-emoji.png" alt="Rock" />
+        </button>
+        <button class="rockPaperScissorButton" (click)="play('paper')">
+            <img class="rps" src="../../../assets/paper-emoji.png" alt="Paper" />
+        </button>
+        <button class="rockPaperScissorButton" (click)="play('scissor')">
+            <img class="rps" src="../../../assets/scissor-emoji.png" alt="Scissor" />
+        </button>
+
+        <p class="rockPaperScissorResult"></p>
+
+        <div class="resultDiv">
+            <p class="resultDivP">{{ result || 'Start Game' }}</p>
+        </div>
+
+        <div class="rockPaperScissorResultDiv">
+            <div class="playerOne">
+                <p><u><strong>{{player1}}</strong></u></p>
+                <img class="playerOneImage " [class.blinkingText]="result === '' "  src="{{playerMoveImg}}" alt="" />
+            </div>
+            <div class="playerTwo  d-flex flex-column align-items-center justify-content-center">
+                <p><u><strong>{{player2}}</strong></u></p>
+                <img class="playerTwoImage" [class.blinkingText]="result === '' " src="{{computerMoveImg}}" alt="" />
+            </div>
+        </div>
+
+        <div class="scoreCard d-flex justify-content-between mt-5">
+
+
+            <p class="rpp"><u><strong>Wins :<span class="rpsWins">{{ score.wins }}</span></strong></u></p>
+            <p class="rpp"><u><strong>Losses :<span class="rpsLosses">{{ score.losses }}</span></strong></u></p>
+            <p class="rpp"><u><strong>Ties :<span class="rpsTies">{{ score.ties }}</span></strong></u></p>
+
+        </div>
+
+        <div class="resetScoreButton">
+            <button class="resetScore" (click)="resetScore()">Reset Score</button>
+        </div>
+    </div>
+</div>

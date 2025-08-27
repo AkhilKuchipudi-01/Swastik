@@ -1,0 +1,378 @@
+.mainContainer {
+    min-height: 100vh;
+    padding: 1rem;
+    max-height: fit-content;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    font-family: system-ui, sans-serif;
+    background: var(--bg-gradient);
+    color: var(--text-color);
+    transition: background var(--transition-speed) ease,
+        color var(--transition-speed) ease;
+
+    /* Aurora backdrop */
+    .auroraBackdrop {
+        position: absolute;
+        inset: 0;
+        opacity: .55;
+        filter: blur(80px);
+        mix-blend-mode: soft-light;
+        pointer-events: none;
+    }
+
+    /* Accent Gradients */
+    .blueGradient {
+        background: var(--blueGradient);
+    }
+
+    .pinkGradient {
+        background: var(--pinkGradient);
+    }
+
+    .mintGradient {
+        background: var(--mintGradient);
+    }
+
+    .sunsetGradient {
+        background: var(--sunsetGradient);
+    }
+
+    .blackGradient {
+        background: var(--blackGradient);
+    }
+
+    /* Top Navigation */
+    .topNav {
+        position: sticky;
+        // margin-bottom: 1rem;
+        padding: 0.5rem;
+        top: 0;
+        z-index: 40;
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        border-bottom: 1px solid var(--nav-border);
+        background: var(--nav-bg);
+        transition: background var(--transition-speed) ease,
+            border-color var(--transition-speed) ease;
+
+        /* My Account dropdown */
+        .myAccount {
+            position: relative;
+            display: inline-block;
+
+            .navItems {
+                position: absolute;
+                top: 130%;
+                left: 0;
+                margin-top: 4px;
+                display: flex;
+                flex-direction: column;
+                gap: 6px;
+                min-width: 180px;
+
+                /*  glassmorphism */
+                background: rgba(255, 255, 255, .6);
+                border: 1px solid rgba(255, 255, 255, .5);
+                border-radius: 14px;
+                padding: 10px;
+                backdrop-filter: blur(24px);
+                -webkit-backdrop-filter: blur(24px);
+                box-shadow:
+                    inset 0 1px 0 rgba(255, 255, 255, .6),
+                    0 20px 60px -20px rgba(0, 0, 0, .45);
+                z-index: 100;
+
+                /* animation */
+                opacity: 0;
+                transform: translateY(-8px);
+                visibility: hidden;
+                transition: opacity 0.25s ease, transform 0.25s ease;
+            }
+
+            /* Optional: create a small pointer/arrow that connects menu to button */
+            .navItems::before {
+                content: "";
+                position: absolute;
+                top: -6px;
+                left: 16px;
+                width: 12px;
+                height: 12px;
+                background: inherit;
+                box-shadow:
+                    inset 0 1px 0 rgba(255, 255, 255, .6),
+                    0 20px 60px -20px rgba(0, 0, 0, .45);
+                border-top: 1px solid rgba(255, 255, 255, .5);
+                border-left: 1px solid rgba(255, 255, 255, .5);
+                transform: rotate(45deg);
+                border-radius: 3px;
+            }
+
+            .navItems.blackGradient {
+                background: var(--blackGradient);
+            }
+
+            .navItems.blueGradient {
+                background: var(--blueGradient);
+            }
+
+            .navItems.mintGradient {
+                background: var(--mintGradient);
+            }
+
+            .navItems.pinkGradient {
+                background: var(--pinkGradient);
+            }
+
+            .navItems.sunsetGradient {
+                background: var(--sunsetGradient);
+            }
+
+            /* when open */
+            &.open .navItems {
+                opacity: 1;
+                transform: translateY(0);
+                visibility: visible;
+            }
+
+
+            .liveBadge.blueGradient,
+            .progressFill.blueGradient {
+                background: linear-gradient(90deg, #3b82f6, #6366f1, #8b5cf6);
+            }
+
+            .liveBadge.pinkGradient,
+            .progressFill.pinkGradient {
+                background: linear-gradient(90deg, #ec4899, #f43f5e, #f97316);
+            }
+
+            .liveBadge.mintGradient,
+            .progressFill.mintGradient {
+                background: linear-gradient(90deg, #34d399, #14b8a6, #06b6d4);
+            }
+
+            .liveBadge.sunsetGradient,
+            .progressFill.sunsetGradient {
+                background: linear-gradient(90deg, #f59e0b, #f97316, #ef4444);
+            }
+
+            .darkMode .myAccount .navItems {
+                background: rgba(255, 255, 255, .08);
+                border-color: rgba(255, 255, 255, .1);
+            }
+
+            .accentGlow {
+                position: absolute;
+                // inset: -120px;
+                opacity: .45;
+                filter: blur(120px);
+                pointer-events: none;
+            }
+
+            .reflectiveStreak {
+                position: absolute;
+                right: -25%;
+                top: -25%;
+                width: auto;
+                height: auto;
+                transform: rotate(45deg);
+                background: rgba(255, 255, 255, .28);
+                filter: blur(24px);
+                border-radius: 50%;
+                pointer-events: none;
+            }
+
+            /* Nav Item buttons */
+            .navItem {
+                cursor: pointer;
+                text-align: left;
+                padding: 10px 14px;
+                border-radius: 14px;
+                transition: background 0.25s ease, color 0.25s ease;
+
+                &:hover {
+                    background: rgba(255, 255, 255, 0.2);
+                    color: var(--accent-text, #000);
+                }
+
+                &:active {
+                    transform: scale(0.97);
+                }
+            }
+        }
+
+
+        /* Glossy Orb */
+        .glossyOrb {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: linear-gradient(to bottom,
+                    rgba(255, 255, 255, .8),
+                    rgba(255, 255, 255, .2));
+            border: 1px solid rgba(4, 4, 4, 0.4);
+            box-shadow: inset 0 1px 0 rgba(255, 255, 255, .6);
+            position: relative;
+        }
+
+        .orbGlow {
+            position: absolute;
+            inset: 0;
+            border-radius: 50%;
+            background: var(--orb-glow);
+            filter: blur(8px);
+            z-index: -1;
+            transition: background var(--transition-speed) ease;
+        }
+
+        /* App Title */
+        .appTitle {
+            font-weight: 600;
+            letter-spacing: .1px;
+        }
+
+        /* Pill Button */
+    }
+
+    .pillButton {
+        position: relative;
+        border-radius: 999px;
+        padding: 8px 16px;
+        font-weight: 600;
+        border: 1px solid var(--pill-border);
+        background: var(--pill-bg);
+        // background-color: var(--pill-bg);
+        color: var(--pill-text);
+        box-shadow: inset 0 1px 0 rgba(255, 255, 255, .85),
+            0 8px 16px -8px rgba(0, 0, 0, .3);
+        transition: transform .15s ease,
+            box-shadow .15s ease,
+            background var(--transition-speed) ease,
+            color var(--transition-speed) ease;
+        cursor: pointer;
+
+        &:hover {
+            transform: translateY(-1px);
+            box-shadow: inset 0 1px 0 rgba(255, 255, 255, .95),
+                0 12px 24px -10px rgba(0, 0, 0, .35);
+        }
+    }
+
+    .pillButton.active {
+        color: #fff !important;
+        font-weight: 700;
+        position: relative;
+        animation: pulseAccent 1.5s infinite ease-in-out;
+        box-shadow: 0 0 10px var(--accent-color, #3b82f6),
+            0 0 20px var(--accent-color, #3b82f6);
+    }
+
+    .pillButton.active {
+        color: #fff !important;
+        font-weight: 700;
+        position: relative;
+        animation: pulseAccent 1.5s infinite ease-in-out;
+        box-shadow: 0 0 10px var(--accent-color, #3b82f6),
+            0 0 20px var(--accent-color, #3b82f6);
+    }
+
+    :host-context(body.blueGradient) {
+        .pillButton.active {
+            background: #3b82f6;
+            --accent-color: #3b82f6;
+        }
+    }
+
+    :host-context(body.pinkGradient) {
+        .pillButton.active {
+            background: #ec4899;
+            --accent-color: #ec4899;
+        }
+    }
+
+    :host-context(body.mintGradient) {
+        .pillButton.active {
+            background: #34d399;
+            --accent-color: #34d399;
+        }
+    }
+
+    :host-context(body.sunsetGradient) {
+        .pillButton.active {
+            background: #f59e0b;
+            --accent-color: #f59e0b;
+        }
+    }
+
+    :host-context(body.blackGradient) {
+        .pillButton.active {
+            background: #f3f3f3;
+            color: #232526 !important;
+            --accent-color: #232526;
+        }
+    }
+
+    .controlPanel {
+        padding: 2rem;
+        width: 100%;
+        color: var(--text-color);
+        border-radius: 22px;
+        background: rgba(255, 255, 255, .6);
+        border: 1px solid rgba(255, 255, 255, .5);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        box-shadow: inset 0 1px 0 rgba(255, 255, 255, .6), 0 20px 60px -20px rgba(0, 0, 0, .45);
+    }
+
+    .darkMode .controlPanel {
+        background: rgba(255, 255, 255, .08);
+        border-color: rgba(255, 255, 255, .1);
+    }
+
+    .sectionTitle {
+        font-weight: 800;
+    }
+
+    .sectionSub {
+        font-size: .94rem;
+        color: var(--textColor) !important;
+        // color: #a2a2a2 !important;
+    }
+
+    .controlTile {
+        flex: 1;
+        border-radius: 16px;
+        padding: 12px;
+        border: 1px solid rgba(255, 255, 255, .6);
+        // border: 1px solid rgba(36, 36, 36, 0.6) !important;
+        background: rgba(255, 255, 255, .6);
+        transition: box-shadow .15s ease, transform .15s ease;
+        position: relative;
+        color: var(--textColor);
+    }
+
+    .controlTile:hover {
+        transform: translateY(-1px);
+    }
+
+    .darkMode .controlTile {
+        background: rgba(255, 255, 255, .08);
+        border-color: rgba(255, 255, 255, .1);
+    }
+
+    .selectedTile {
+        outline: 2px solid rgba(255, 255, 255, .85);
+    }
+
+    .controlSwatch {
+        height: 34px;
+        border-radius: 12px;
+    }
+
+    .controlLabel {
+        font-size: .86rem;
+        font-weight: 600;
+        color: black;
+    }
+
+}

@@ -1,0 +1,296 @@
+<div class="appWrapper" [ngClass]="{ darkMode: dark, lightMode: !dark }">
+
+    <!-- Subtle aurora backdrop -->
+    <div class="auroraBackdrop"></div>
+
+    <!-- Main -->
+    <main class="container pb-5">
+        <!-- Hero -->
+        <section class="pt-4 pt-md-5">
+            <div class="heroCard position-relative p-4 p-md-5 overflow-hidden">
+                <div class="accentGlow"></div>
+                <div class="reflectiveStreak"></div>
+
+                <div class="row align-items-center position-relative">
+                    <div class="col-md-6">
+                        <h1 class="heroTitle">Smooth, glossy, delightful.</h1>
+                        <p class="heroText mt-3">
+                            Experience the latest aesthetic—soft depth, vibrant blur, and
+                            gentle motion. Created to Experience
+                        </p>
+                        <div class="d-flex gap-2 mt-3">
+                            <button class="primaryCta" (click)="openModal = true">Get Started</button>
+                            <button class="ghostCta">Learn More</button>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6 mt-4 mt-md-0">
+                        <div class="showcaseWidget position-relative overflow-hidden" [ngClass]="accent">
+                            <div class="glassGrid">
+                                <div *ngFor="let n of [0,1,2,3,4,5]" class="glassPane"></div>
+                            </div>
+                            <div class="lightSweep"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- App Icons -->
+        <!-- <section class="mt-4 mt-md-5">
+            <div class="row g-3">
+                <div class="col-6 col-sm-4 col-lg-2" *ngFor="let app of apps">
+                    <div class="appIcon text-center">
+                        <div class="appIconBox">
+                            <span class="appIconEmoji">{{ app.emoji }}</span>
+                            <div class="appIconHighlight"></div>
+                        </div>
+                        <div class="appIconLabel">{{ app.label }}</div>
+                    </div>
+                </div>
+            </div>
+        </section> -->
+
+        <section class="mt-4 mt-md-5">
+            <div class="d-flex gap-4 playGame">
+
+                <!-- Online Play Card -->
+                <div class="gameCard" (click)="startOnlineGame()">
+                    <div class="cardImage onlinePlayImg">
+                        <img src="../../../assets/gifs/playOnline.gif" alt="">
+                        <div class=" globeBox">
+                            <!-- <div class="spinning-globe-container">
+                                <div class="globe-sphere"></div>
+                                <div class="globe-ring ring-1"></div>
+                                <div class="globe-ring ring-2"></div>
+                            </div> -->
+                        </div>
+                    </div>
+                    <div class="cardContent livePlayer">
+                        <div class="cardTitle">Play Online</div>
+                        <div class="cardMeta">Multiplayer mode • PvP</div>
+                        <div class="cardFooter livePlayerFooter">
+                            <span class="liveBadge d-flex gap-1">Players: <span>{{liveViewersCount}}</span></span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Computer Card -->
+                <div class="gameCard" (click)="startComputerGame()">
+                    <div class="cardImage ComputerPlayImg">
+                        <img src="../../../assets/gifs/cartoon-657.gif" alt="">
+                        <div class=" globeBox">
+                            <!-- <i class="pi pi-desktop computerIcon"></i> -->
+                        </div>
+                    </div>
+                    <div class="cardContent">
+                        <div class="cardTitle">Play with Computer</div>
+                        <div class="cardMeta">Computer mode • Instant match</div>
+                    </div>
+                </div>
+
+                <!-- Friend Card -->
+                <div class="gameCard" (click)="startFriendGame()">
+                    <div class="cardImage playFriendImg">
+                        <img src="../../../assets/gifs/vacation-fun.gif" alt="">
+                        <div class="globeBox">
+                            <!-- <i class="pi pi-users friendIcon"></i> -->
+                        </div>
+                    </div>
+                    <div class="cardContent">
+                        <div class="cardTitle">Play with Friend</div>
+                        <div class="cardMeta">Multiplayer mode • Instant match</div>
+                    </div>
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- Controls + Stats + Now Playing -->
+        <section class="mt-4 mt-md-5">
+            <div class="row g-3">
+                <!-- Control Panel -->
+                <div class="col-lg-4">
+                    <div class="controlPanel p-4">
+                        <h3 class="sectionTitle mb-1">Controls</h3>
+                        <p class="sectionSub text-muted mb-3">Tweak the accent to match your brand.</p>
+                        <div class="row g-2">
+                            <div class="col-6" *ngFor="let opt of accents">
+                                <button class="controlTile w-100 text-start position-relative"
+                                    [ngClass]="{ selectedTile: accent === opt.val }" (click)="setAccent(opt.val)">
+                                    <div class="controlSwatch" [ngClass]="opt.val"></div>
+                                    <span class="controlLabel d-block mt-2">{{ opt.name }}</span>
+                                    <!-- <span class="tileHighlight"></span> -->
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Stats -->
+                <div class="col-lg-4">
+                    <div class="statsCard p-4">
+                        <div class="d-flex align-items-center justify-content-between">
+                            <h3 class="sectionTitle mb-0">Performance</h3>
+                            <span class="liveBadge">Live</span>
+                        </div>
+
+                        <div class="row g-2 text-center mt-3">
+                            <div class="col-4">
+                                <div class="metricCard p-2">
+                                    <div class="metricLabel">Latency</div>
+                                    <div class="metricValue">12 ms</div>
+                                </div>
+                            </div>
+                            <div class="col-4">
+                                <div class="metricCard p-2">
+                                    <div class="metricLabel">Uptime</div>
+                                    <div class="metricValue">99.98%</div>
+                                </div>
+                            </div>
+                            <div class="col-4">
+                                <div class="metricCard p-2">
+                                    <div class="metricLabel">Requests</div>
+                                    <div class="metricValue">1.2T</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="progressTrack mt-3">
+                            <div class="progressFill" style="width: 75%;"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Now Playing -->
+                <div class="col-lg-4">
+                    <div class="nowPlaying p-4 position-relative overflow-hidden">
+                        <div class="accentGlow"></div>
+                        <div class="d-flex align-items-center gap-3 position-relative">
+                            <div class="coverBox">
+                                <div class="coverGradient"></div>
+                                <!-- <div class="coverHighlight"></div> -->
+                            </div>
+
+                            <div class="flex-grow-1">
+                                <div class="songTitle">Shimmer (feat. Blur)</div>
+                                <div class="songArtist text-muted">The Glass Ensemble</div>
+                                <div class="progressTrack mt-3">
+                                    <div class="progressFill" style="width: 66%;"></div>
+                                </div>
+                            </div>
+
+                            <div class="d-flex gap-2">
+                                <button class="circleButton">⏮</button>
+                                <button class="circleButton">⏯</button>
+                                <button class="circleButton">⏭</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footerBar mt-4">
+        <div class="container py-4 text-center small footerBarText text-muted">
+            Built with Bootstrap, a sprinkle of CSS blur, and a lot of taste. ✨
+        </div>
+    </footer>
+
+    <!-- Modal -->
+    <div *ngIf="openModal" class="modalOverlay d-flex align-items-center justify-content-center">
+        <div class="modalBackdrop" (click)="openModal = false"></div>
+        <div class="modalCard" [ngClass]="accent">
+            <h3 class="modalTitle">Welcome to Rock Paper Scissors</h3>
+            <p class="modalText">
+                This modal demonstrates frosted glass surfaces, soft highlights, and rich depth.
+            </p>
+            <div class="text-end mt-3">
+                <button class="pillButton" (click)="openModal = false">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Message Box -->
+    <div *ngIf="message" class="modalOverlay d-flex align-items-center justify-content-center">
+        <div class="modalBackdrop" (click)="closeMessage()"></div>
+        <div class="messageBox text-center">
+            <p class="mb-3">{{ message }}</p>
+            <button class="pillButton" (click)="closeMessage()">OK</button>
+        </div>
+    </div>
+
+    <p-dialog [(visible)]="waitingDialog" [modal]="true" [closable]="false" [dismissableMask]="false"
+        header="Connecting..." [style]="{width: '400px'}">
+
+        <div class="d-flex gap-4 justify-content-between px-4 mb-3 skeletonContainer">
+            <p-skeleton shape="circle" size="5rem" class="playerSkeleton leftPlayer" />
+            <p-skeleton shape="circle" size="5rem" class="playerSkeleton rightPlayer" />
+        </div>
+
+        <div class="text-center">
+            <p>Searching for other players...</p>
+            <p class="mt-2"><i class="pi pi-spin pi-spinner" style="font-size: 2rem;"></i></p>
+        </div>
+
+        <div class="text-end mt-3">
+            <button class="p-button p-button-rounded p-button-text" (click)="cancelWaiting()">Close</button>
+        </div>
+    </p-dialog>
+
+    <!-- Friend Room Dialog -->
+    <p-dialog [(visible)]="friendDialog" [modal]="true" [dismissableMask]="false" header="Play with Friend"
+        [style]="{width: '400px'}">
+
+        <div class="roomContainer">
+            <!-- Tabs -->
+            <div class="tableHeader">
+                <ul>
+                    <li (click)="selectTab('Create')" [class.active]="activeTab === 'Create'">Create</li>
+                    <li (click)="selectTab('Join')" [class.active]="activeTab === 'Join'">Join</li>
+                </ul>
+            </div>
+
+            <div class="tableBottom">
+                <!-- Create Room -->
+                <div *ngIf="activeTab === 'Create'" class="text-center">
+                    <h4>Your Room Code</h4>
+                    <div class="roomCodeBox mt-2">{{ roomCode }}</div>
+
+                    <div class="d-flex gap-2 justify-content-center mt-3">
+                        <button class="p-button p-button-rounded" (click)="copyCode()">Copy</button>
+                        <button class="p-button p-button-rounded p-button-success"
+                            (click)="shareWhatsapp()">WhatsApp</button>
+                    </div>
+
+                    <div class="mt-4">
+                        <p *ngIf="!player2Joined">Waiting for player to join...</p>
+                        <p *ngIf="player2Joined" class="text-success">Player joined!</p>
+                        <button class="p-button p-button-rounded p-button-primary mt-2" [disabled]="!player2Joined"
+                            (click)="startCreatedGame()">
+                            Start Game
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Join Room -->
+                <div *ngIf="activeTab === 'Join'" class="text-center">
+                    <h4>Enter Room Code</h4>
+                    <div class="d-flex gap-2 justify-content-center mt-3">
+                        <input aria-label="Code" maxlength="1" *ngFor="let n of [0,1,2,3]" class="roomInput" [(ngModel)]="joinCode[n]"
+                            (input)="onJoinCodeChange($event, n)" />
+                    </div>
+                    <div class="mt-3">
+                        <button class="p-button" [disabled]="!isJoinCodeValid()" (click)="joinRoom()">Join Room</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </p-dialog>
+
+
+</div>
