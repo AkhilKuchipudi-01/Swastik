@@ -53,6 +53,7 @@ import { Features } from './Components/features/features';
 import { Aboutus } from './Components/aboutus/aboutus';
 import { Privacy } from './Components/privacy/privacy';
 import { TermsAndConditions } from './Components/terms-and-conditions/terms-and-conditions';
+import { PageNotFound } from './Components/page-not-found/page-not-found';
 
 @NgModule({
   declarations: [
@@ -64,7 +65,8 @@ import { TermsAndConditions } from './Components/terms-and-conditions/terms-and-
     Supportus,
     Aboutus,
     Privacy,
-    TermsAndConditions
+    TermsAndConditions,
+    PageNotFound
   ],
   imports: [
     BrowserModule,

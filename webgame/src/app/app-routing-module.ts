@@ -9,6 +9,7 @@ import { Features } from './Components/features/features';
 import { Aboutus } from './Components/aboutus/aboutus';
 import { Privacy } from './Components/privacy/privacy';
 import { TermsAndConditions } from './Components/terms-and-conditions/terms-and-conditions';
+import { PageNotFound } from './Components/page-not-found/page-not-found';
 
 const routes: Routes = [
   {
@@ -48,6 +49,10 @@ const routes: Routes = [
     path: 'terms',
     component: TermsAndConditions,
   },
+  {
+    path: '**',
+    component: PageNotFound
+  } // catch-all 404 route
 ];
 
 @NgModule({
