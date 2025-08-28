@@ -3,6 +3,7 @@
   /* Background + Text */
   --bg-gradient: linear-gradient(135deg, #fafafa, #ffffff, #f0f0f0);
   --text-color: #121212;
+  --white-bg: #f5f5f5;
 
   /* Top nav */
   --nav-bg: rgba(255, 255, 255, .5);
@@ -18,7 +19,7 @@
   --pill-border: rgba(255, 255, 255, .5);
 
   /* Accent gradients */
-    // background: linear-gradient(90deg, #3b82f6, #6366f1, #8b5cf6);
+  // background: linear-gradient(90deg, #3b82f6, #6366f1, #8b5cf6);
   --blueGradient: linear-gradient(45deg, #3b82f6, #6366f1, #8b5cf6);
   --pinkGradient: linear-gradient(45deg, #ec4899, #f43f5e, #f97316);
   --mintGradient: linear-gradient(45deg, #34d399, #14b8a6, #06b6d4);
@@ -34,6 +35,8 @@
   :root {
     --bg-gradient: linear-gradient(135deg, #0b0b0b, #1a1a1a, #2a2a2a);
     --text-color: #f5f5f5;
+    --white-bg: #121212;
+
 
     --nav-bg: rgba(255, 255, 255, .08);
     /* --nav-border: rgba(255, 255, 255, .08); */
@@ -51,6 +54,8 @@
 body.light-theme-override {
   --bg-gradient: linear-gradient(135deg, #fafafa, #ffffff, #f0f0f0);
   --text-color: #121212;
+  --white-bg: #f5f5f5;
+
 
   --nav-bg: rgba(255, 255, 255, .5);
   /* --nav-border: rgba(255, 255, 255, .18); */
@@ -67,6 +72,8 @@ body.light-theme-override {
 body.dark-theme-override {
   --bg-gradient: linear-gradient(135deg, #0b0b0b, #1a1a1a, #2a2a2a);
   --text-color: #f5f5f5;
+    --white-bg: #121212;
+
 
   --nav-bg: rgba(255, 255, 255, .08);
   /* --nav-border: rgba(255, 255, 255, .08); */

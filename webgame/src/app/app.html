@@ -1,4 +1,4 @@
-<div class="mainContainer">
+<div class="mainContainer" [class.no-select]="disableSelection">
 
   <!-- Subtle aurora backdrop -->
   <div class="auroraBackdrop" [ngClass]="accent"></div>
@@ -35,39 +35,41 @@
 
         <!-- Guest menu -->
         <ng-template #guestMenu>
-          <div class="d-flex justify-content-between gap-2">
-            <div class="d-flex align-items-center gap-2">
-              <span class="pillButton homeBtn navBtn" routerLink="/home" routerLinkActive="active"
-                [routerLinkActiveOptions]="{ exact: true }" [ngClass]="accent">
-                Home
-              </span>
+          <div class="d-flex justify-content-between gap-2 align-items-center position-relative">
 
-              <span class="pillButton supportusBtn navBtn" routerLink="/supportus" routerLinkActive="active"
-                [ngClass]="accent">
-                Support Us
-              </span>
-
-              <span class="pillButton featuresBtn navBtn" routerLink="/features" routerLinkActive="active"
-                [ngClass]="accent">
-                Features
-              </span>
-
-              <span class="pillButton aboutusBtn navBtn" routerLink="/aboutus" routerLinkActive="active"
-                [ngClass]="accent">
-                About Us
-              </span>
-
-
+            <!-- Hamburger button (shown on small screens) -->
+            <div class="hamburgerBtn d-md-none align-items-center" (click)="toggleHamburger()">
+              <!-- ☰ -->
+              <span [class.open]="hamburgerOpen"></span>
+              <span [class.open]="hamburgerOpen"></span>
+              <span [class.open]="hamburgerOpen"></span>
+              <!-- {{ hamburgerOpen ? '×' : '☰' }} -->
             </div>
+
+            <!-- Hamburger menu dropdown -->
+            <div class="hamburgerMenu d-flex gap-2" [class.open]="hamburgerOpen">
+              <!-- <div class="accentGlow" [ngClass]="accent"></div> -->
+              <div class="reflectiveStreak"></div>
+              <span class="pillButton homeBtn navBtn" routerLink="/home" routerLinkActive="active"
+                [routerLinkActiveOptions]="{ exact: true }" [ngClass]="accent">Home</span>
+              <span class="pillButton supportusBtn navBtn" routerLink="/supportus" routerLinkActive="active"
+                [ngClass]="accent">Support Us</span>
+              <span class="pillButton featuresBtn navBtn" routerLink="/features" routerLinkActive="active"
+                [ngClass]="accent">Features</span>
+              <span class="pillButton aboutusBtn navBtn" routerLink="/aboutus" routerLinkActive="active"
+                [ngClass]="accent">About Us</span>
+            </div>
+
+            <!-- Buttons common for all screens -->
             <div class="d-flex gap-2">
               <button type="button" class="pillButton" (click)="openSettings()">Settings</button>
               <button type="button" class="pillButton" (click)="router.navigate(['/login'])">
                 Login
               </button>
             </div>
-
           </div>
         </ng-template>
+
       </div>
     </div>
   </div>

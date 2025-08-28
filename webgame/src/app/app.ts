@@ -21,11 +21,18 @@ type ThemeMode = 'system' | 'light' | 'dark';
 export class App implements OnInit {
   protected readonly title = signal('rockPaperScissor-app');
 
+  hamburgerOpen = false;
+  disableSelection = true;
+
   theme: ThemeMode = 'system'; // default
   accent: AccentOption['val'] = 'blackGradient';
 
   showHeader = true;
   showSettings = false;
+
+  toggleHamburger() {
+    this.hamburgerOpen = !this.hamburgerOpen;
+  }
 
   accents: AccentOption[] = [
     { name: 'Black', val: 'blackGradient' },

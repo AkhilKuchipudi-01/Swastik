@@ -977,3 +977,60 @@
         border: 1px solid rgba(35, 37, 38, .3);
     }
 }
+
+/* Mobile responsiveness for playGame */
+@media (max-width: 767px) {
+    .playGame {
+        flex-direction: column;
+        /* stack cards vertically */
+        align-items: center;
+        /* center horizontally */
+        height: auto;
+        /* auto height for mobile */
+        gap: 1rem;
+        /* smaller gap between cards */
+        padding: 0 1rem;
+        /* side padding */
+    }
+
+    .playGame .gameCard {
+        width: 100% !important;
+        /* full width on mobile */
+        max-width: 400px;
+        /* optional max width */
+        margin: 0 auto;
+        /* center cards */
+    }
+
+    .playGame .cardImage {
+        height: 150px;
+        /* smaller card image height */
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .playGame .cardImage img {
+        width: 75%;
+        height: auto;
+        object-fit: contain;
+    }
+
+    .playGame .cardContent {
+        padding: 0.75rem 1rem;
+        /* adjust padding */
+    }
+
+    .playGame .livePlayerFooter {
+        position: static;
+        /* prevent absolute positioning issues */
+        margin-top: 0.5rem;
+        text-align: right;
+    }
+
+    .playGame .globeBox {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+}
