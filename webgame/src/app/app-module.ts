@@ -43,6 +43,9 @@ import { MessageService } from 'primeng/api';
 // Firebase
 import { AngularFireModule } from '@angular/fire/compat';
 import { environment } from '../environments/environment';
+import { provideFirebaseApp, initializeApp } from '@angular/fire/app';
+import { provideFirestore, getFirestore } from '@angular/fire/firestore';
+import { provideAuth, getAuth } from '@angular/fire/auth';
 
 // App Components
 import { Game } from './Components/game/game';
@@ -54,6 +57,7 @@ import { Aboutus } from './Components/aboutus/aboutus';
 import { Privacy } from './Components/privacy/privacy';
 import { TermsAndConditions } from './Components/terms-and-conditions/terms-and-conditions';
 import { PageNotFound } from './Components/page-not-found/page-not-found';
+import { PlayWithFriendGame } from './Components/play-with-friend-game/play-with-friend-game';
 
 @NgModule({
   declarations: [
@@ -66,7 +70,8 @@ import { PageNotFound } from './Components/page-not-found/page-not-found';
     Aboutus,
     Privacy,
     TermsAndConditions,
-    PageNotFound
+    PageNotFound,
+    PlayWithFriendGame
   ],
   imports: [
     BrowserModule,

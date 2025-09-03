@@ -2,7 +2,7 @@
     <div>
         <span class="rockPaperScissorText">Rock Paper Scissors</span>
     </div>
-    <!-- <div>hi</div> -->
+
     <div>
         <button class="rockPaperScissorButton" (click)="play('rock')">
             <img class="rps" src="../../../assets/rock-emoji.png" alt="Rock" />
@@ -22,26 +22,35 @@
 
         <div class="rockPaperScissorResultDiv">
             <div class="playerOne">
-                <p><u><strong>{{player1}}</strong></u></p>
-                <img class="playerOneImage " [class.blinkingText]="result === '' "  src="{{playerMoveImg}}" alt="" />
+                <p><u><strong>{{ player1 }}</strong></u></p>
+                <img class="playerOneImage" [class.blinkingText]="result === ''" src="{{ playerMoveImg }}" alt="" />
             </div>
-            <div class="playerTwo  d-flex flex-column align-items-center justify-content-center">
-                <p><u><strong>{{player2}}</strong></u></p>
-                <img class="playerTwoImage" [class.blinkingText]="result === '' " src="{{computerMoveImg}}" alt="" />
+            <div class="playerTwo d-flex flex-column align-items-center justify-content-center">
+                <p><u><strong>{{ player2 }}</strong></u></p>
+                <img class="playerTwoImage" [class.blinkingText]="result === ''" src="{{ computerMoveImg }}" alt="" />
             </div>
         </div>
 
         <div class="scoreCard d-flex justify-content-between mt-5">
-
-
-            <p class="rpp"><u><strong>Wins :<span class="rpsWins">{{ score.wins }}</span></strong></u></p>
-            <p class="rpp"><u><strong>Losses :<span class="rpsLosses">{{ score.losses }}</span></strong></u></p>
-            <p class="rpp"><u><strong>Ties :<span class="rpsTies">{{ score.ties }}</span></strong></u></p>
-
+            <p class="rpp">
+                <u><strong>Wins :<span class="rpsWins">{{ score.wins }}</span></strong></u>
+            </p>
+            <p class="rpp">
+                <u><strong>Losses :<span class="rpsLosses">{{ score.losses }}</span></strong></u>
+            </p>
+            <p class="rpp">
+                <u><strong>Ties :<span class="rpsTies">{{ score.ties }}</span></strong></u>
+            </p>
         </div>
 
+        <!-- Reset score (for single player) -->
         <div class="resetScoreButton">
             <button class="resetScore" (click)="resetScore()">Reset Score</button>
         </div>
+
+        <!-- Next Round (only for multiplayer) -->
+        <!-- <div class="resetScoreButton" *ngIf="player2 !== 'Computer'">
+            <button class="resetScore" (click)="resetRound()">Next Round</button>
+        </div> -->
     </div>
 </div>

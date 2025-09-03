@@ -10,6 +10,7 @@ import { Aboutus } from './Components/aboutus/aboutus';
 import { Privacy } from './Components/privacy/privacy';
 import { TermsAndConditions } from './Components/terms-and-conditions/terms-and-conditions';
 import { PageNotFound } from './Components/page-not-found/page-not-found';
+import { PlayWithFriendGame } from './Components/play-with-friend-game/play-with-friend-game';
 
 const routes: Routes = [
   {
@@ -50,9 +51,13 @@ const routes: Routes = [
     component: TermsAndConditions,
   },
   {
+    path: 'fndgame',
+    component: PlayWithFriendGame,
+  },
+  {
     path: '**',
     component: PageNotFound
-  } // catch-all 404 route
+  },
 ];
 
 @NgModule({

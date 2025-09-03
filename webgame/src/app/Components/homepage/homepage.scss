@@ -319,9 +319,11 @@
     }
 
     .ComputerPlayImg {
+        background-color: #fff;
+
         img {
-            width: 100%;
-            height: 100%;
+            width: fit-content;
+            height: 70%;
         }
     }
 
@@ -1033,4 +1035,102 @@
         align-items: center;
         justify-content: center;
     }
+}
+
+/* 🎛 Friend Dialog Tabs */
+.tableHeader ul {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    justify-content: space-around;
+    margin: 0 0 1rem 0;
+    border-bottom: 1px solid rgba(255, 255, 255, .25);
+}
+
+.tableHeader li {
+    flex: 1;
+    text-align: center;
+    padding: 0.5rem 0;
+    font-weight: 600;
+    cursor: pointer;
+    border-bottom: 2px solid transparent;
+    transition: color 0.3s ease, border-color 0.3s ease;
+}
+
+.tableHeader li.active {
+    color: var(--primary-color, #3b82f6);
+    border-bottom: 2px solid var(--primary-color, #3b82f6);
+}
+
+/* Smooth panel switching */
+.tableBottom {
+    position: relative;
+    min-height: 200px;
+}
+
+.tabPanel {
+    display: none !important;
+    /* force hide inactive panels */
+    width: 100%;
+}
+
+.tabPanel.active {
+    display: flex !important;
+    /* show active panel */
+    flex-direction: column;
+    animation: fadeIn 0.3s ease;
+}
+
+.small {
+    color: #6c757d; // default muted gray
+    font-weight: 500;
+    transition: color 0.3s ease;
+}
+
+.countdown-warning {
+    color: #dc3545 !important; // bootstrap danger red
+    font-weight: 600;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(5px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Room code box */
+.roomCodeBox {
+    font-size: 1.4rem;
+    font-weight: 700;
+    letter-spacing: 3px;
+    padding: 0.75rem 1rem;
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.15);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    display: inline-block;
+}
+
+/* Join inputs */
+.roomInput {
+    width: 48px;
+    height: 48px;
+    text-align: center;
+    font-size: 1.25rem;
+    font-weight: 600;
+    border-radius: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    background: rgba(255, 255, 255, 0.2);
+    color: inherit;
+}
+
+.roomInput:focus {
+    outline: none;
+    border-color: var(--primary-color, #3b82f6);
+    box-shadow: 0 0 6px rgba(59, 130, 246, 0.4);
 }
