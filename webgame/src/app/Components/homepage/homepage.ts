@@ -52,9 +52,15 @@ export class Homepage implements OnInit {
     this.realtime.setUserOnline(this.userId);
     this.generateRoomCode();
 
-    this.realtime.listenLiveViewers((count) => {
+    // this.realtime.listenLiveViewers((count) => {
+    //   this.liveViewersCount = count;
+    //   this.cdr.detectChanges();
+    // });
+
+    // Start listening reactively
+    this.realtime.listenLiveViewers();
+    this.realtime.liveViewers$.subscribe(count => {
       this.liveViewersCount = count;
-      this.cdr.detectChanges();
     });
 
     const savedUser = localStorage.getItem('accountLabel');
@@ -113,9 +119,20 @@ export class Homepage implements OnInit {
     this.generateRoomCode(true);
   }
 
-  startCreatedGame() {
+  async startCreatedGame() {
     this.friendDialog = false;
     sessionStorage.setItem('playerRole', 'player1');
+
+    // Fetch full players object from DB
+    const players = await this.realtime.getPlayers(this.roomCode);
+
+    if (players?.player1?.name) {
+      sessionStorage.setItem('player1', players.player1.name);
+    }
+    if (players?.player2?.name) {
+      sessionStorage.setItem('player2', players.player2.name);
+    }
+
     this.router.navigate(['/fndgame'], {
       queryParams: { code: this.roomCode, host: this.username }
     });
@@ -144,13 +161,16 @@ export class Homepage implements OnInit {
     return this.joinCode.join('').length === 4;
   }
 
-  joinRoom() {
+  async joinRoom() {
     const enteredCode = this.joinCode.join('');
-    this.realtime.joinRoom(enteredCode, this.username);
-    this.realtime.setPlayerReady(enteredCode, this.username, true);
+
+    await this.realtime.joinRoom(enteredCode, this.username);
+    await this.realtime.setPlayerReady(enteredCode, this.username, true);
 
     sessionStorage.setItem('playerRole', 'player2');
     this.friendDialog = false;
+    sessionStorage.setItem('player1', ''); // will be fetched from DB later
+    sessionStorage.setItem('player2', this.username);
 
     this.router.navigate(['/fndgame'], { queryParams: { code: enteredCode, guest: this.username } });
   }

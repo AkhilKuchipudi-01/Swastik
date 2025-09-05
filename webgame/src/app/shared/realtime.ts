@@ -12,6 +12,8 @@ import {
   remove
 } from 'firebase/database';
 import { environment } from '../../environments/environment';
+import { getAuth, signInAnonymously } from 'firebase/auth';
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -19,8 +21,31 @@ import { environment } from '../../environments/environment';
 export class Realtime {
   private app = initializeApp(environment.firebaseConfig);
   private db = getDatabase(this.app);
+  private auth = getAuth(this.app);
+  private currentUid: string | null = null;
 
-  constructor() { }
+  // Reactive live viewers count
+  public liveViewers$ = new BehaviorSubject<number>(0);
+
+  constructor() {
+    this.signInAnonymously();
+  }
+
+  /** Sign in anonymously and track current user UID */
+  private signInAnonymously() {
+    signInAnonymously(this.auth)
+      .then(() => {
+        this.currentUid = this.auth.currentUser?.uid || null;
+        if (this.currentUid) this.setUserOnline(this.currentUid);
+        this.listenLiveViewers();
+      })
+      .catch(console.error);
+  }
+
+  /** Expose current UID for rooms/moves */
+  public get uid() {
+    return this.currentUid;
+  }
 
   /** Track viewers online */
   setUserOnline(userId: string) {
@@ -29,11 +54,19 @@ export class Realtime {
     onDisconnect(userRef).remove();
   }
 
-  listenLiveViewers(callback: (count: number) => void) {
+  // listenLiveViewers(callback: (count: number) => void) {
+  //   const viewersRef = ref(this.db, 'viewers');
+  //   onValue(viewersRef, (snapshot) => {
+  //     const data = snapshot.val() || {};
+  //     callback(Object.keys(data).length);
+  //   });
+  // }
+
+  listenLiveViewers() {
     const viewersRef = ref(this.db, 'viewers');
     onValue(viewersRef, (snapshot) => {
       const data = snapshot.val() || {};
-      callback(Object.keys(data).length);
+      this.liveViewers$.next(Object.keys(data).length);
     });
   }
 
@@ -74,6 +107,12 @@ export class Realtime {
       const p2 = snap.val();
       if (p2?.name) callback(p2.name);
     });
+  }
+
+  async getPlayers(code: string) {
+    const playersRef = ref(this.db, `rooms/${code}/players`);
+    const snap = await get(playersRef);
+    return snap.val() || {};
   }
 
   /** Watch full players object */
