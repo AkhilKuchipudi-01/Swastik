@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+// ---------------- Homepage ----------------
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { Router } from '@angular/router';
 import { Realtime } from '../../shared/realtime';
-import { ChangeDetectorRef } from '@angular/core';
 
 interface AccentOption {
   name: string;
@@ -21,93 +21,22 @@ export class Homepage implements OnInit {
   accent: AccentOption['val'] = 'blackGradient';
 
   liveViewersCount = 0;
-  private userId = Math.random().toString(36).substring(2, 10); // Random ID per tab
+  private userId: string = Math.random().toString(36).substring(2, 10);
   username: string = '';
 
   waitingDialog = false;
-  private waitTimeout: any;
-  private skeletonInterval: any;
+  private waitTimeout?: ReturnType<typeof setTimeout>;
+  private skeletonInterval?: ReturnType<typeof setInterval>;
 
-  // --- Multiplayer Dialog State ---
-  friendDialog: boolean = false;
+  friendDialog = false;
   activeTab: 'Create' | 'Join' = 'Create';
 
-  // --- Room Management ---
-  roomCode: string = '';
+  codeCountdown = 600; // 10 min = 600 seconds
+  private codeTimer?: ReturnType<typeof setInterval>;
+
+  roomCode = '';
   joinCode: string[] = ['', '', '', ''];
-  player2Joined: boolean = false;
-
-  // constructor(private realtime: Realtime, private router: Router) { }
-
-  /** Open dialog and default to Create tab */
-  // startFriendGame() {
-  //   this.friendDialog = true;
-  //   this.selectTab('Create');
-  //   this.generateRoomCode();
-  // }
-
-  /** Switch tab */
-  selectTab(tab: 'Create' | 'Join') {
-    this.activeTab = tab;
-    if (tab === 'Create') {
-      this.generateRoomCode();
-    }
-  }
-
-  /** Generate 4-digit room code and create room */
-  generateRoomCode() {
-    this.roomCode = Math.floor(1000 + Math.random() * 9000).toString();
-    sessionStorage.setItem('roomCode', this.roomCode);
-
-    this.realtime.createRoom(this.roomCode, this.username);
-
-    // Listen for guest joining
-    this.realtime.onPlayerJoined(this.roomCode, (guest: string) => {
-      this.player2Joined = true;
-    });
-  }
-
-  /** Host starts the game */
-  startCreatedGame() {
-    this.friendDialog = false;
-    this.router.navigate(['/game'], {
-      queryParams: { code: this.roomCode, host: this.username }
-    });
-  }
-
-  /** Copy room code */
-  copyCode() {
-    navigator.clipboard.writeText(this.roomCode);
-  }
-
-  /** Share via WhatsApp */
-  shareWhatsapp() {
-    const url = `https://wa.me/?text=Join my Rock Paper Scissors room! Code: ${this.roomCode}`;
-    window.open(url, '_blank');
-  }
-
-  /** Handle join code typing */
-  onJoinCodeChange(event: any, index: number) {
-    const value = (event.target as HTMLInputElement).value;
-    if (value && index < 3) {
-      const nextInput = document.querySelectorAll('.roomInput')[index + 1] as HTMLInputElement;
-      if (nextInput) nextInput.focus();
-    }
-  }
-
-  /** Validate join code */
-  isJoinCodeValid(): boolean {
-    return this.joinCode.join('').length === 4;
-  }
-
-  /** Join existing room */
-  joinRoom() {
-    const enteredCode = this.joinCode.join('');
-    this.realtime.joinRoom(enteredCode, this.username);
-    this.friendDialog = false;
-    this.router.navigate(['/game'], { queryParams: { code: enteredCode, guest: this.username } });
-  }
-
+  player2Joined = false;
 
   accents: AccentOption[] = [
     { name: 'Black', val: 'blackGradient' },
@@ -117,23 +46,23 @@ export class Homepage implements OnInit {
     { name: 'Sunset', val: 'sunsetGradient' },
   ];
 
-  constructor(
-    private realtime: Realtime,
-    private router: Router,
-    private cdr: ChangeDetectorRef) {
-  }
+  constructor(private realtime: Realtime, private router: Router, private cdr: ChangeDetectorRef) { }
 
   ngOnInit() {
-    // Mark this user as online
     this.realtime.setUserOnline(this.userId);
+    this.generateRoomCode();
 
-    // Listen to live viewers count
-    this.realtime.listenLiveViewers((count) => {
+    // this.realtime.listenLiveViewers((count) => {
+    //   this.liveViewersCount = count;
+    //   this.cdr.detectChanges();
+    // });
+
+    // Start listening reactively
+    this.realtime.listenLiveViewers();
+    this.realtime.liveViewers$.subscribe(count => {
       this.liveViewersCount = count;
-      this.cdr.detectChanges();
     });
 
-    // Get username or generate Guest
     const savedUser = localStorage.getItem('accountLabel');
     this.username = savedUser && savedUser !== 'Login'
       ? savedUser
@@ -143,29 +72,127 @@ export class Homepage implements OnInit {
     sessionStorage.setItem('player2', 'Computer');
   }
 
+  selectTab(tab: 'Create' | 'Join') {
+    this.activeTab = tab;
+    if (tab === 'Create') {
+      this.generateRoomCode();
+    }
+  }
+
+  generateRoomCode(forceNew: boolean = false) {
+    const lastGenerated = sessionStorage.getItem('roomGeneratedAt');
+    const existingCode = sessionStorage.getItem('roomCode');
+    const now = Date.now();
+
+    if (!forceNew && existingCode && lastGenerated && now - parseInt(lastGenerated, 10) < 10 * 60 * 1000) {
+      this.roomCode = existingCode;
+    } else {
+      this.roomCode = Math.floor(1000 + Math.random() * 9000).toString();
+      sessionStorage.setItem('roomCode', this.roomCode);
+      sessionStorage.setItem('roomGeneratedAt', now.toString());
+    }
+
+    this.realtime.createRoom(this.roomCode, this.username);
+    this.resetCodeTimer();
+
+    this.realtime.onPlayerJoined(this.roomCode, (guest: string) => {
+      this.player2Joined = true;
+      this.startCreatedGame();
+    });
+  }
+
+  resetCodeTimer() {
+    clearInterval(this.codeTimer);
+    this.codeCountdown = 600;
+
+    this.codeTimer = setInterval(() => {
+      this.codeCountdown--;
+      this.cdr.detectChanges();
+
+      if (this.codeCountdown <= 0) {
+        this.refreshRoomCode();
+      }
+    }, 1000);
+  }
+
+  refreshRoomCode() {
+    this.generateRoomCode(true);
+  }
+
+  async startCreatedGame() {
+    this.friendDialog = false;
+    sessionStorage.setItem('playerRole', 'player1');
+
+    // Fetch full players object from DB
+    const players = await this.realtime.getPlayers(this.roomCode);
+
+    if (players?.player1?.name) {
+      sessionStorage.setItem('player1', players.player1.name);
+    }
+    if (players?.player2?.name) {
+      sessionStorage.setItem('player2', players.player2.name);
+    }
+
+    this.router.navigate(['/fndgame'], {
+      queryParams: { code: this.roomCode, host: this.username }
+    });
+  }
+
+  copyCode() {
+    navigator.clipboard.writeText(this.roomCode);
+  }
+
+  shareWhatsapp() {
+    const joinUrl = `${window.location.origin}/join/${this.roomCode}`;
+    const message = `Join my Rock Paper Scissors room here: ${joinUrl}`;
+    const url = `https://wa.me/?text=${encodeURIComponent(message)}`;
+    window.open(url, '_blank');
+  }
+
+  onJoinCodeChange(event: Event, index: number) {
+    const input = event.target as HTMLInputElement;
+    if (input.value && index < 3) {
+      const nextInput = document.querySelectorAll('.roomInput')[index + 1] as HTMLInputElement;
+      if (nextInput) nextInput.focus();
+    }
+  }
+
+  isJoinCodeValid(): boolean {
+    return this.joinCode.join('').length === 4;
+  }
+
+  async joinRoom() {
+    const enteredCode = this.joinCode.join('');
+
+    await this.realtime.joinRoom(enteredCode, this.username);
+    await this.realtime.setPlayerReady(enteredCode, this.username, true);
+
+    sessionStorage.setItem('playerRole', 'player2');
+    this.friendDialog = false;
+    sessionStorage.setItem('player1', ''); // will be fetched from DB later
+    sessionStorage.setItem('player2', this.username);
+
+    this.router.navigate(['/fndgame'], { queryParams: { code: enteredCode, guest: this.username } });
+  }
+
   getRandomPlayerName(): string {
     const randomId = Math.floor(Math.random() * 10000);
     return `Player-${randomId}`;
   }
 
-  // Start Online Game
   startOnlineGame() {
     const randomPlayer = this.getRandomPlayerName();
-
-    // Show waiting dialog
     this.waitingDialog = true;
 
-    // Animate skeletons randomly moving up/down
     this.skeletonInterval = setInterval(() => {
       const left = document.querySelector('.leftPlayer') as HTMLElement;
       const right = document.querySelector('.rightPlayer') as HTMLElement;
       if (left && right) {
-        left.style.transform = `translateY(-${Math.random() * 20}px)`;
-        right.style.transform = `translateY(-${Math.random() * 20}px)`;
+        left.style.transform = `translateY(-${Math.random() * 10}px)`;
+        right.style.transform = `translateY(-${Math.random() * 10}px)`;
       }
-    }, 800)
+    }, 800);
 
-    // Random delay 5–15 sec
     const waitTime = Math.floor(Math.random() * 11 + 5) * 1000;
 
     this.waitTimeout = setTimeout(() => {
@@ -174,7 +201,6 @@ export class Homepage implements OnInit {
 
     sessionStorage.setItem('player1', this.username);
     sessionStorage.setItem('player2', randomPlayer);
-    // this.router.navigate(['/game'], { state: { player1: this.username, player2: randomPlayer } });
   }
 
   animatePlayersTogether() {
@@ -196,7 +222,7 @@ export class Homepage implements OnInit {
       this.router.navigate(['/game'], {
         state: { player1: this.username, player2: randomPlayer }
       });
-    }, 1200); // wait for animation to finish
+    }, 1200);
   }
 
   cancelWaiting() {
@@ -205,19 +231,15 @@ export class Homepage implements OnInit {
     this.waitingDialog = false;
   }
 
-  // Start Game with Computer
   startComputerGame() {
     sessionStorage.setItem('player1', this.username);
     sessionStorage.setItem('player2', 'Computer');
     this.router.navigate(['/game'], { state: { player1: this.username, player2: 'Computer' } });
   }
 
-  // Start Game with Friend
   startFriendGame() {
-    // You could also generate a random friend placeholder here
-    sessionStorage.setItem('player1', this.username);
-    sessionStorage.setItem('player2', 'Friend');
-    this.router.navigate(['/game'], { state: { player1: this.username, player2: 'Friend' } });
+    this.friendDialog = true;
+    this.selectTab('Create');
   }
 
   toggleDarkMode() {
